@@ -1,0 +1,31 @@
+{
+    "raw_record_count": 100000,
+    "deduplicated_count": 0,
+    "invalid_dates_flagged": 0,
+    "negative_duration_flagged": 137,
+    "coordinate_anomalies_flagged": 0,
+    "transformations_applied": [
+        "Removed 0 duplicate or null unique_keys",
+        "Standardized borough names casing while preserving genuine missing values",
+        "Parsed created_date, closed_date, due_date directly as local timestamps (no UTC shift)",
+        "Flagged and nulled 0 out-of-bounds geographic coordinates",
+        "Detected and nulled 137 negative resolution duration anomalies"
+    ],
+    "iqr_statistics": {
+        "valid_resolution_records": 98255,
+        "mean_hours": 379.42,
+        "median_hours": 2.92,
+        "std_hours": 2018.25,
+        "skewness": 10.124,
+        "q1_25th_percentile": 0.63,
+        "q3_75th_percentile": 56.8,
+        "iqr": 56.16,
+        "lower_bound": 0.0,
+        "upper_bound": 141.04,
+        "outlier_count": 16636,
+        "outlier_percentage": 16.93
+    },
+    "final_cleaned_count": 100000,
+    "closed_records_count": 98392,
+    "open_records_count": 1608
+}

@@ -1,0 +1,282 @@
+[
+    {
+        "field_name": "unique_key",
+        "data_type": "int64",
+        "null_count": 0,
+        "null_percentage": 0.0,
+        "meaning": "Unique identifier assigned to each 311 service request",
+        "analytical_use": "Primary Key, distinct request counts"
+    },
+    {
+        "field_name": "created_date",
+        "data_type": "datetime64[us]",
+        "null_count": 0,
+        "null_percentage": 0.0,
+        "meaning": "Date and time when the service request was submitted",
+        "analytical_use": "Temporal trend analysis, resolution calculation"
+    },
+    {
+        "field_name": "closed_date",
+        "data_type": "datetime64[us]",
+        "null_count": 1608,
+        "null_percentage": 1.61,
+        "meaning": "Date and time when the service request was officially marked closed",
+        "analytical_use": "Closure rate and resolution duration computation"
+    },
+    {
+        "field_name": "resolution_action_updated_date",
+        "data_type": "datetime64[us]",
+        "null_count": 1078,
+        "null_percentage": 1.08,
+        "meaning": "Date and time when resolution action was last recorded",
+        "analytical_use": "Agency responsiveness tracking"
+    },
+    {
+        "field_name": "agency",
+        "data_type": "object",
+        "null_count": 0,
+        "null_percentage": 0.0,
+        "meaning": "Acronym of the responsible civic agency (e.g., NYPD, HPD, DSNY)",
+        "analytical_use": "Workload distribution, inter-agency resolution comparison"
+    },
+    {
+        "field_name": "agency_name",
+        "data_type": "object",
+        "null_count": 0,
+        "null_percentage": 0.0,
+        "meaning": "Full formal title of the responsible municipal department",
+        "analytical_use": "Reporting and dashboard labels"
+    },
+    {
+        "field_name": "complaint_type",
+        "data_type": "object",
+        "null_count": 0,
+        "null_percentage": 0.0,
+        "meaning": "Primary category classification of the service issue",
+        "analytical_use": "Complaint ranking, prioritization matrix, service mix"
+    },
+    {
+        "field_name": "descriptor",
+        "data_type": "object",
+        "null_count": 3196,
+        "null_percentage": 3.2,
+        "meaning": "Detailed specification of the complaint",
+        "analytical_use": "Root cause inspection, detailed filtering"
+    },
+    {
+        "field_name": "location_type",
+        "data_type": "object",
+        "null_count": 12629,
+        "null_percentage": 12.63,
+        "meaning": "Type of property or environment where the incident occurred",
+        "analytical_use": "Spatial vulnerability analysis"
+    },
+    {
+        "field_name": "incident_zip",
+        "data_type": "float64",
+        "null_count": 1581,
+        "null_percentage": 1.58,
+        "meaning": "Five-digit postal zip code of the incident location",
+        "analytical_use": "Neighborhood-level aggregation"
+    },
+    {
+        "field_name": "incident_address",
+        "data_type": "object",
+        "null_count": 5076,
+        "null_percentage": 5.08,
+        "meaning": "Physical street number and name of the incident",
+        "analytical_use": "Micro-location investigations"
+    },
+    {
+        "field_name": "street_name",
+        "data_type": "object",
+        "null_count": 5078,
+        "null_percentage": 5.08,
+        "meaning": "Name of the street where incident occurred",
+        "analytical_use": "Corridor analysis"
+    },
+    {
+        "field_name": "city",
+        "data_type": "object",
+        "null_count": 5618,
+        "null_percentage": 5.62,
+        "meaning": "Municipality / borough neighborhood name",
+        "analytical_use": "Geographic filtering"
+    },
+    {
+        "field_name": "status",
+        "data_type": "object",
+        "null_count": 0,
+        "null_percentage": 0.0,
+        "meaning": "Operational lifecycle state (Closed, In Progress, Open, Assigned)",
+        "analytical_use": "Status distribution, backlog tracking"
+    },
+    {
+        "field_name": "borough",
+        "data_type": "object",
+        "null_count": 143,
+        "null_percentage": 0.14,
+        "meaning": "One of the five NYC boroughs or Unspecified",
+        "analytical_use": "Borough comparisons, geographic demand distribution"
+    },
+    {
+        "field_name": "latitude",
+        "data_type": "float64",
+        "null_count": 1789,
+        "null_percentage": 1.79,
+        "meaning": "WGS84 latitude coordinate in decimal degrees",
+        "analytical_use": "Geospatial mapping and clustering"
+    },
+    {
+        "field_name": "longitude",
+        "data_type": "float64",
+        "null_count": 1789,
+        "null_percentage": 1.79,
+        "meaning": "WGS84 longitude coordinate in decimal degrees",
+        "analytical_use": "Geospatial mapping and clustering"
+    },
+    {
+        "field_name": "due_date",
+        "data_type": "datetime64[us]",
+        "null_count": 99597,
+        "null_percentage": 99.6,
+        "meaning": "Service level agreement date when action was expected",
+        "analytical_use": "SLA tracking and timeliness"
+    },
+    {
+        "field_name": "descriptor_2",
+        "data_type": "object",
+        "null_count": 100000,
+        "null_percentage": 100.0,
+        "meaning": "Secondary complaint descriptor or sub-category",
+        "analytical_use": "Sub-issue classification"
+    },
+    {
+        "field_name": "resolution_description",
+        "data_type": "object",
+        "null_count": 100000,
+        "null_percentage": 100.0,
+        "meaning": "Official explanation of agency findings and action taken",
+        "analytical_use": "Civic communication review, operational audit"
+    },
+    {
+        "field_name": "community_board",
+        "data_type": "object",
+        "null_count": 100000,
+        "null_percentage": 100.0,
+        "meaning": "NYC Community Board administrative district identifier",
+        "analytical_use": "Civic governance reporting"
+    },
+    {
+        "field_name": "council_district",
+        "data_type": "object",
+        "null_count": 100000,
+        "null_percentage": 100.0,
+        "meaning": "NYC City Council district identifier",
+        "analytical_use": "Policy and legislative resource allocation"
+    },
+    {
+        "field_name": "police_precinct",
+        "data_type": "object",
+        "null_count": 100000,
+        "null_percentage": 100.0,
+        "meaning": "NYPD police precinct jurisdiction",
+        "analytical_use": "Public safety coordination"
+    },
+    {
+        "field_name": "open_data_channel_type",
+        "data_type": "object",
+        "null_count": 100000,
+        "null_percentage": 100.0,
+        "meaning": "Intake channel (PHONE, ONLINE, MOBILE, OTHER)",
+        "analytical_use": "Channel adoption and citizen contact preference"
+    },
+    {
+        "field_name": "park_borough",
+        "data_type": "object",
+        "null_count": 100000,
+        "null_percentage": 100.0,
+        "meaning": "Borough associated with park or public recreation facility",
+        "analytical_use": "Recreational infrastructure maintenance"
+    },
+    {
+        "field_name": "is_closed",
+        "data_type": "bool",
+        "null_count": 0,
+        "null_percentage": 0.0,
+        "meaning": "Boolean flag: True if record has valid closed_date, False otherwise",
+        "analytical_use": "Closure rate calculation"
+    },
+    {
+        "field_name": "resolution_hours",
+        "data_type": "float64",
+        "null_count": 1745,
+        "null_percentage": 1.75,
+        "meaning": "Derived elapsed time in hours between created_date and closed_date",
+        "analytical_use": "Core KPI, agency performance, IQR outlier detection"
+    },
+    {
+        "field_name": "is_valid_resolution",
+        "data_type": "bool",
+        "null_count": 0,
+        "null_percentage": 0.0,
+        "meaning": "Boolean flag: True if resolution duration is non-negative and valid",
+        "analytical_use": "Valid sample filtering for statistical metrics"
+    },
+    {
+        "field_name": "duration_category",
+        "data_type": "str",
+        "null_count": 0,
+        "null_percentage": 0.0,
+        "meaning": "Categorical bin: Under 24h, 24-72h, Over 72h, or Unresolved",
+        "analytical_use": "Operational tier analysis and SLA monitoring"
+    },
+    {
+        "field_name": "created_year",
+        "data_type": "int32",
+        "null_count": 0,
+        "null_percentage": 0.0,
+        "meaning": "Calendar year extracted from created_date",
+        "analytical_use": "Annual trend analysis"
+    },
+    {
+        "field_name": "created_month",
+        "data_type": "int32",
+        "null_count": 0,
+        "null_percentage": 0.0,
+        "meaning": "Calendar month number (1-12) extracted from created_date",
+        "analytical_use": "Seasonality analysis"
+    },
+    {
+        "field_name": "created_month_name",
+        "data_type": "str",
+        "null_count": 0,
+        "null_percentage": 0.0,
+        "meaning": "Full month name (e.g. January, February) from created_date",
+        "analytical_use": "Dashboard monthly timeline visualization"
+    },
+    {
+        "field_name": "created_weekday",
+        "data_type": "str",
+        "null_count": 0,
+        "null_percentage": 0.0,
+        "meaning": "Day of week (Monday-Sunday) from created_date",
+        "analytical_use": "Weekly demand patterning"
+    },
+    {
+        "field_name": "created_hour",
+        "data_type": "int32",
+        "null_count": 0,
+        "null_percentage": 0.0,
+        "meaning": "Hour of the day (0-23) from created_date",
+        "analytical_use": "Hourly peak load identification"
+    },
+    {
+        "field_name": "is_resolution_outlier",
+        "data_type": "bool",
+        "null_count": 0,
+        "null_percentage": 0.0,
+        "meaning": "Boolean flag: True if resolution_hours falls outside [Q1 - 1.5*IQR, Q3 + 1.5*IQR]",
+        "analytical_use": "Outlier screening and long-tail case investigation"
+    }
+]
