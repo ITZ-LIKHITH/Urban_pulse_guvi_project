@@ -1169,24 +1169,69 @@ if st.session_state["nav_page"] == "Overview":
         fig_trend = go.Figure()
 
         if compare_overlay:
-            top3_types = ["Noise - Residential", "HEAT/HOT WATER", "Illegal Parking"]
-            colors = {"Noise - Residential": "#38BDF8", "HEAT/HOT WATER": "#F97316", "Illegal Parking": "#A855F7"}
+            # Dynamically determine the top 3 categories in the active slice
+            top3_candidates = trend_slice["complaint_type"].value_counts().head(3).index.tolist()
 
-            for c_type in top3_types:
-                sub_df = trend_slice[trend_slice["complaint_type"] == c_type]
+            # If the active slice has fewer than 3 categories (e.g. user selected 1-2 in the sidebar filter),
+            # supplement from the broader timeframe-filtered dataset so 3 curves are always available to compare
+            if len(top3_candidates) < 3:
+                base_time_slice = df.dropna(subset=["created_date"]).copy()
+                if st.session_state["trend_timeframe"] == "6M":
+                    max_dt = base_time_slice["created_date"].max()
+                    base_time_slice = base_time_slice[base_time_slice["created_date"] >= (max_dt - pd.DateOffset(months=6))]
+                elif st.session_state["trend_timeframe"] == "1Y":
+                    max_dt = base_time_slice["created_date"].max()
+                    base_time_slice = base_time_slice[base_time_slice["created_date"] >= (max_dt - pd.DateOffset(years=1))]
+
+                if current_boroughs and 0 < len(current_boroughs) < len(all_boroughs):
+                    base_time_slice = base_time_slice[base_time_slice["borough"].isin(current_boroughs)]
+                if current_agencies and 0 < len(current_agencies) < len(all_agencies):
+                    base_time_slice = base_time_slice[base_time_slice["agency"].isin(current_agencies)]
+
+                broad_top3 = base_time_slice["complaint_type"].value_counts().head(3).index.tolist()
+                top3_types = []
+                for t in top3_candidates + broad_top3:
+                    if t not in top3_types:
+                        top3_types.append(t)
+                    if len(top3_types) == 3:
+                        break
+                data_for_compare = base_time_slice
+            else:
+                top3_types = top3_candidates
+                data_for_compare = trend_slice
+
+            # Continuous monthly index across the active timeframe window
+            all_min = data_for_compare["created_date"].min()
+            all_max = data_for_compare["created_date"].max()
+            if pd.notna(all_min) and pd.notna(all_max):
+                all_periods = pd.period_range(start=all_min.to_period("M"), end=all_max.to_period("M"), freq="M")
+            else:
+                all_periods = None
+
+            # Distinct vibrant color palette for the 3 curves
+            palette = ["#38BDF8", "#F97316", "#A855F7"]
+
+            for idx, c_type in enumerate(top3_types):
+                sub_df = data_for_compare[data_for_compare["complaint_type"] == c_type]
                 if not sub_df.empty:
-                    m_df = (
-                        sub_df.groupby(sub_df["created_date"].dt.to_period("M"))
-                        .size()
-                        .reset_index(name="Count")
-                    )
-                    m_df["Month"] = m_df["created_date"].dt.strftime("%b %Y")
+                    grp = sub_df.groupby(sub_df["created_date"].dt.to_period("M")).size()
+                    if all_periods is not None:
+                        m_counts = grp.reindex(all_periods, fill_value=0)
+                        x_vals = [p.strftime("%b %Y") for p in all_periods]
+                        y_vals = m_counts.values
+                    else:
+                        m_df = grp.reset_index(name="Count")
+                        m_df["Month"] = m_df["created_date"].dt.strftime("%b %Y")
+                        x_vals = m_df["Month"]
+                        y_vals = m_df["Count"]
+
+                    curve_color = palette[idx % len(palette)]
                     fig_trend.add_trace(go.Scatter(
-                        x=m_df["Month"],
-                        y=m_df["Count"],
+                        x=x_vals,
+                        y=y_vals,
                         name=c_type,
                         mode="lines+markers",
-                        line=dict(shape="spline", color=colors.get(c_type, "#38BDF8"), width=2),
+                        line=dict(shape="spline", color=curve_color, width=2.2),
                         marker=dict(size=6),
                         hovertemplate="<b>%{x}</b><br>" + c_type + ": %{y:,}<extra></extra>",
                     ))
